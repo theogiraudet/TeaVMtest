@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="teavm-wasm" name="TeaVM (WebAssembly)">
+      <configuration>
+        <option name="mainClass" value="org.example.Client" />
+        <option name="skipped" value="true" />
+        <option name="targetDirectory" value="E:\Programmation\IntelliJ\TeaVM test\target/generated/wasm/teavm-wasm" />
+      </configuration>
+    </facet>
+    <facet type="teavm-js" name="TeaVM (JS)">
+      <configuration>
+        <option name="mainClass" value="org.example.Client" />
+        <option name="skipped" value="true" />
+        <option name="targetDirectory" value="E:\Programmation\IntelliJ\TeaVM test\target/generated/js/teavm" />
+      </configuration>
+    </facet>
+  </component>
+</module>
