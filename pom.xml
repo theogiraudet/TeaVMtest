@@ -15,6 +15,35 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+
+  <profiles>
+    <profile>
+      <id>hello_world</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <prop.main>fr.irisa.hello_world.Main</prop.main>
+        <prop.filter>fr/irisa/hello_world</prop.filter>
+      </properties>
+    </profile>
+    <profile>
+      <id>with_other_class</id>
+      <properties>
+        <prop.main>fr.irisa.with_other_class.Main</prop.main>
+        <prop.filter>fr/irisa/with_other_class</prop.filter>
+      </properties>
+    </profile>
+    <profile>
+      <id>with_library</id>
+      <properties>
+        <prop.main>fr.irisa.with_library.Main</prop.main>
+        <prop.filter>fr/irisa/with_library</prop.filter>
+      </properties>
+    </profile>
+  </profiles>
+
+
   <dependencies>
     <!-- Emulator of Java class library for TeaVM -->
     <dependency>
@@ -45,13 +74,33 @@
       <artifactId>teavm-interop</artifactId>
       <version>${teavm.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>fr.irisa</groupId>
+      <artifactId>teavm-library</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+          <includes>
+            <include>**/${prop.filter}/**/*.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
-        <version>2.4</version>
+        <version>3.3.2</version>
         <configuration>
           <webResources>
             <resource>
@@ -83,7 +132,7 @@
           </goals>
           <configuration>
             <targetDirectory>${project.build.directory}/generated/js/teavm</targetDirectory>
-            <mainClass>org.example.Client</mainClass>
+            <mainClass>${prop.main}</mainClass>
             <minifying>true</minifying>
             <debugInformationGenerated>true</debugInformationGenerated>
             <optimizationLevel>ADVANCED</optimizationLevel>
@@ -96,12 +145,10 @@
           </goals>
           <configuration>
             <targetDirectory>${project.build.directory}/generated/wasm/teavm-wasm</targetDirectory>
-            <mainClass>org.example.Client</mainClass>
+            <mainClass>${prop.main}</mainClass>
             <debugInformationGenerated>true</debugInformationGenerated>
             <targetType>WEBASSEMBLY</targetType>
             <optimizationLevel>FULL</optimizationLevel>
-            <minHeapSize>1</minHeapSize>
-            <maxHeapSize>16</maxHeapSize>
           </configuration>
         </execution>
         </executions>
